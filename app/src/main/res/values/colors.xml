@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="color_science_blue">#0066CC</color>
+    <color name="color_cyan">#00ccff</color>
+    <color name="color_gray">#5ce9e9e9</color>
+    <color name="color_transparent">#00000000</color>
 </resources>
