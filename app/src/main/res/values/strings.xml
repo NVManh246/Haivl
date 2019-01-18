@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Haivl</string>
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_hot">Hot</string>
+    <string name="menu_library">Sưu tập</string>
     <string name="login">Login</string>
     <string name="required_enter_username">Yêu cầu nhập username</string>
     <string name="required_enter_password">Yêu cầu nhập password</string>
