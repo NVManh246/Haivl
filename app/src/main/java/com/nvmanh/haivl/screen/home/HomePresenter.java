@@ -31,4 +31,9 @@ public class HomePresenter implements HomeContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void like(String username, int postId, boolean isLike) {
+        mPostsRepository.like(username, postId, isLike);
+    }
 }

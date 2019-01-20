@@ -63,4 +63,16 @@ public class Post {
     public int getNumberComment() {
         return mNumberComment;
     }
+
+    public void setLike(boolean like) {
+        mIsLike = like;
+    }
+
+    public void setNumberLike(int numberLike) {
+        mNumberLike = numberLike;
+    }
+
+    public void setNumberComment(int numberComment) {
+        mNumberComment = numberComment;
+    }
 }

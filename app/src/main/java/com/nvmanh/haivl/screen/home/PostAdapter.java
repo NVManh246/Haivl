@@ -7,11 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.nvmanh.haivl.R;
 import com.nvmanh.haivl.data.model.Post;
 
@@ -21,10 +22,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
 
     private Context mContext;
     private List<Post> mPosts;
+    private OnLikeListener mOnLikeListener;
 
-    public PostAdapter(Context context, List<Post> posts) {
+    public PostAdapter(Context context, List<Post> posts, OnLikeListener onLikeListener) {
         mContext = context;
         mPosts = posts;
+        mOnLikeListener = onLikeListener;
     }
 
     @NonNull
@@ -32,7 +35,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
     public ViewHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.item_post, parent, false);
-        return new ViewHodler(view);
+        return new ViewHodler(view, mOnLikeListener);
     }
 
     @Override
@@ -45,27 +48,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
         return mPosts != null ? mPosts.size() : 0;
     }
 
-    public class ViewHodler extends RecyclerView.ViewHolder {
+    public void addData(List<Post> posts) {
+        mPosts.addAll(posts);
+        notifyDataSetChanged();
+    }
+
+    public PostAdapter getIntance() {
+        return this;
+    }
+
+    public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView mImageUserAvatar;
         private TextView mTextDisplayName;
         private TextView mTextPostTime;
         private TextView mTextPostContent;
         private ImageView mImagePostImage;
-        private ImageView mImageLike;
+        private CheckBox mCheckBoxLike;
         private TextView mTextNumberLike;
         private TextView mTextNumberComment;
+        private OnLikeListener mOnLikeListener;
 
-        public ViewHodler(View itemView) {
+        public ViewHodler(View itemView, OnLikeListener onLikeListener) {
             super(itemView);
             mImageUserAvatar = itemView.findViewById(R.id.image_user_avatar);
             mTextDisplayName = itemView.findViewById(R.id.text_display_name);
             mTextPostTime = itemView.findViewById(R.id.text_post_time);
             mTextPostContent = itemView.findViewById(R.id.text_post_content);
             mImagePostImage = itemView.findViewById(R.id.image_post_image);
-            mImageLike = itemView.findViewById(R.id.image_like);
+            mCheckBoxLike = itemView.findViewById(R.id.checkbox_like);
             mTextNumberLike = itemView.findViewById(R.id.text_likes);
             mTextNumberComment = itemView.findViewById(R.id.text_comments);
+            mCheckBoxLike.setOnClickListener(this);
+            mOnLikeListener = onLikeListener;
         }
 
         private void bindView(Post post) {
@@ -77,12 +92,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
             mTextPostContent.setText(post.getContent());
             Glide.with(mContext).load(post.getImagePath()).into(mImagePostImage);
             if(post.isLike()) {
-                mImageLike.setImageResource(R.drawable.ic_favorite_red_24dp);
+                mCheckBoxLike.setChecked(true);
             } else {
-                mImageLike.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                mCheckBoxLike.setChecked(false);
             }
             mTextNumberLike.setText(String.valueOf(post.getNumberLike()));
             mTextNumberComment.setText(String.valueOf(post.getNumberComment()));
         }
+
+        @Override
+        public void onClick(View view) {
+            boolean isLike = mCheckBoxLike.isChecked();
+            mOnLikeListener.onLike(mPosts.get(getAdapterPosition()).getId(), isLike);
+            mPosts.get(getAdapterPosition()).setLike(isLike);
+            if(isLike) {
+                mPosts.get(getAdapterPosition()).setNumberLike(mPosts.get(getAdapterPosition()).getNumberLike() + 1);
+            } else {
+                mPosts.get(getAdapterPosition()).setNumberLike(mPosts.get(getAdapterPosition()).getNumberLike() - 1);
+            }
+            mTextNumberLike.setText(String.valueOf(mPosts.get(getAdapterPosition()).getNumberLike()));
+        }
+    }
+
+    public interface OnLikeListener {
+        void onLike(int postId, boolean isLike);
     }
 }

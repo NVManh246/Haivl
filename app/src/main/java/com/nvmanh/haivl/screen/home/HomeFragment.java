@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nvmanh.haivl.R;
 import com.nvmanh.haivl.data.model.Post;
@@ -20,7 +21,7 @@ import com.nvmanh.haivl.screen.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeContract.View {
+public class HomeFragment extends Fragment implements HomeContract.View, PostAdapter.OnLikeListener {
 
     private RecyclerView mRecyclerPost;
     private PostAdapter mPostAdapter;
@@ -30,7 +31,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         return view;
     }
@@ -44,7 +46,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mUser = (User) getArguments().get(MainActivity.EXTRA_USER);
 
         mPosts = new ArrayList<>();
-        mPostAdapter = new PostAdapter(getContext(), mPosts);
+        mPostAdapter = new PostAdapter(getContext(), mPosts, this);
         mRecyclerPost.setAdapter(mPostAdapter);
         mRecyclerPost.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerPost.addItemDecoration(new PostItemDecoration(10));
@@ -58,18 +60,23 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showPosts(List<Post> posts) {
-        mPosts.addAll(posts);
-        mPostAdapter.notifyDataSetChanged();
+        mPostAdapter.addData(posts);
+        Log.d("kiemtra", mPosts.size() + " size");
     }
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Nullable
     @Override
     public Context getContext() {
         return super.getContext();
+    }
+
+    @Override
+    public void onLike(int postId, boolean isLike) {
+        mPresenter.like(mUser.getUsername(), postId, isLike);
     }
 }
