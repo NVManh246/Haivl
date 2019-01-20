@@ -21,8 +21,8 @@ public class PostsRepository implements PostsDataSource.PostsRemoteDataSource {
     }
 
     @Override
-    public void getPosts(String myUsername, OnCompleteListener callback) {
-        mPostsRemoteDataSource.getPosts(myUsername, callback);
+    public void getPosts(String myUsername, int page, OnCompleteListener callback) {
+        mPostsRemoteDataSource.getPosts(myUsername, page, callback);
     }
 
     @Override

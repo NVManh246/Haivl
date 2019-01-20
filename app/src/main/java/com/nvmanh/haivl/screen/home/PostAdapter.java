@@ -18,7 +18,10 @@ import com.nvmanh.haivl.data.model.Post;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
+public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int VIEW_TYPE_ITEM = 1;
+    private static final int VIEW_TYPE_LOADING = 0;
 
     private Context mContext;
     private List<Post> mPosts;
@@ -32,15 +35,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
 
     @NonNull
     @Override
-    public ViewHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_post, parent, false);
-        return new ViewHodler(view, mOnLikeListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_post, parent, false);
+            return new ViewHolderItem(view, mOnLikeListener);
+        } else {
+            View view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.layout_loadmore_progress, parent, false);
+            return new ViewHolderLoading(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHodler holder, int position) {
-        holder.bindView(mPosts.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof  ViewHolderItem) {
+            ((ViewHolderItem) holder).bindView(mPosts.get(position));
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mPosts.get(position) != null ? 1 : 0;
     }
 
     @Override
@@ -49,15 +65,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
     }
 
     public void addData(List<Post> posts) {
+        int oldSize = mPosts.size();
+        if(mPosts.size() != 0) {
+            mPosts.remove(mPosts.size() - 1);
+        }
         mPosts.addAll(posts);
-        notifyDataSetChanged();
+        mPosts.add(null);
+        notifyItemRangeInserted(oldSize, mPosts.size());
+
+        Log.d("kiemtra", mPosts.size() + "");
     }
 
-    public PostAdapter getIntance() {
-        return this;
-    }
-
-    public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolderItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView mImageUserAvatar;
         private TextView mTextDisplayName;
@@ -69,7 +88,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
         private TextView mTextNumberComment;
         private OnLikeListener mOnLikeListener;
 
-        public ViewHodler(View itemView, OnLikeListener onLikeListener) {
+        public ViewHolderItem(View itemView, OnLikeListener onLikeListener) {
             super(itemView);
             mImageUserAvatar = itemView.findViewById(R.id.image_user_avatar);
             mTextDisplayName = itemView.findViewById(R.id.text_display_name);
@@ -111,6 +130,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHodler> {
                 mPosts.get(getAdapterPosition()).setNumberLike(mPosts.get(getAdapterPosition()).getNumberLike() - 1);
             }
             mTextNumberLike.setText(String.valueOf(mPosts.get(getAdapterPosition()).getNumberLike()));
+        }
+    }
+
+    public class ViewHolderLoading extends RecyclerView.ViewHolder {
+
+        public ViewHolderLoading(View itemView) {
+            super(itemView);
         }
     }
 

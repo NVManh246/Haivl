@@ -1,5 +1,7 @@
 package com.nvmanh.haivl.screen.home;
 
+import android.os.Handler;
+
 import com.nvmanh.haivl.data.model.Post;
 import com.nvmanh.haivl.data.source.OnCompleteListener;
 import com.nvmanh.haivl.data.source.remote.PostsRemoteDataSource;
@@ -18,18 +20,24 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void getPost(String myUsername) {
-        mPostsRepository.getPosts(myUsername, new OnCompleteListener<List<Post>>() {
+    public void getPost(final String myUsername, final int page) {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onSuccess(List<Post> posts) {
-                mView.showPosts(posts);
-            }
+            public void run() {
+                mPostsRepository.getPosts(myUsername, page, new OnCompleteListener<List<Post>>() {
+                    @Override
+                    public void onSuccess(List<Post> posts) {
+                        mView.showPosts(posts);
+                    }
 
-            @Override
-            public void onFail(Throwable throwable) {
-                mView.showError(throwable.getMessage());
+                    @Override
+                    public void onFail(Throwable throwable) {
+                        mView.showError(throwable.getMessage());
+                    }
+                });
             }
-        });
+        }, 1000);
+
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.nvmanh.haivl.R;
 import com.nvmanh.haivl.data.model.Post;
 import com.nvmanh.haivl.data.model.User;
 import com.nvmanh.haivl.screen.main.MainActivity;
+import com.nvmanh.haivl.utils.EndLessScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, PostAda
     private PostAdapter mPostAdapter;
     private List<Post> mPosts;
     private User mUser;
+    private int mPage;
     private HomeContract.Presenter mPresenter;
 
     @Nullable
@@ -50,18 +53,18 @@ public class HomeFragment extends Fragment implements HomeContract.View, PostAda
         mRecyclerPost.setAdapter(mPostAdapter);
         mRecyclerPost.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerPost.addItemDecoration(new PostItemDecoration(10));
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mPresenter.getPost(mUser.getUsername());
+        mPresenter.getPost(mUser.getUsername(), mPage);
+        mRecyclerPost.addOnScrollListener(new EndLessScrollListener() {
+            @Override
+            public void onLoadMore() {
+                mPresenter.getPost(mUser.getUsername(), ++mPage);
+            }
+        });
     }
 
     @Override
     public void showPosts(List<Post> posts) {
         mPostAdapter.addData(posts);
-        Log.d("kiemtra", mPosts.size() + " size");
     }
 
     @Override

@@ -32,8 +32,8 @@ public class PostsRemoteDataSource implements PostsDataSource.PostsRemoteDataSou
     }
 
     @Override
-    public void getPosts(String myUsername, final OnCompleteListener callback) {
-        Call<List<Post>> call = mHaivlApi.getPosts(myUsername);
+    public void getPosts(String myUsername, int page, final OnCompleteListener callback) {
+        Call<List<Post>> call = mHaivlApi.getPosts(myUsername, page);
         call.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {

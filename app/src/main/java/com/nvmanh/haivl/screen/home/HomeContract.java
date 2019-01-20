@@ -14,7 +14,7 @@ public interface HomeContract {
     }
 
     interface Presenter {
-        void getPost(String myUsername);
+        void getPost(String myUsername, int page);
         void like(String username, int postId, boolean isLike);
     }
 }
