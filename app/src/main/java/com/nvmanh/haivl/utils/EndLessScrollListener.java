@@ -7,21 +7,25 @@ import android.util.Log;
 public abstract class EndLessScrollListener extends RecyclerView.OnScrollListener {
     private int mPreviousTotal = 0;
     private boolean mLoading = true;
+    private int visibleThreshold = 0;
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-        int totalItemCount = recyclerView.getLayoutManager().getItemCount();            // tong so item
-        int firstVisibleItem = ((LinearLayoutManager)recyclerView.getLayoutManager())   // so item da xem
-                .findFirstVisibleItemPosition();
-        Log.d("kiemtra", totalItemCount + " - " + firstVisibleItem);
-        if(mLoading) {
-            if(totalItemCount > mPreviousTotal) {
+
+        int visibleItemCount = recyclerView.getChildCount();
+        int totalItemCount = recyclerView.getLayoutManager().getItemCount();
+        int firstVisibleItem = ((LinearLayoutManager) recyclerView
+                .getLayoutManager()).findFirstVisibleItemPosition();
+
+        if (mLoading) {
+            if (totalItemCount > mPreviousTotal) {
                 mLoading = false;
                 mPreviousTotal = totalItemCount;
             }
         }
-        if(!mLoading && totalItemCount == firstVisibleItem + 2) {
+        if (!mLoading && (totalItemCount - visibleItemCount)
+                <= (firstVisibleItem + visibleThreshold)) {
             onLoadMore();
             mLoading = true;
         }
