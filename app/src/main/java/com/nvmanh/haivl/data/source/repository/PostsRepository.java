@@ -24,4 +24,9 @@ public class PostsRepository implements PostsDataSource.PostsRemoteDataSource {
     public void getPosts(String myUsername, OnCompleteListener callback) {
         mPostsRemoteDataSource.getPosts(myUsername, callback);
     }
+
+    @Override
+    public void like(String myUsername, int postId, boolean isLike) {
+        mPostsRemoteDataSource.like(myUsername, postId, isLike);
+    }
 }

@@ -20,4 +20,9 @@ public interface HaivlApi {
 
     @GET("get_posts.php")
     Call<List<Post>> getPosts(@Query("username") String myUsername);
+
+    @GET("like.php")
+    Call<Void> like(@Query("username") String Username,
+                    @Query("postId") int potsId,
+                    @Query("islike") boolean isLike);
 }

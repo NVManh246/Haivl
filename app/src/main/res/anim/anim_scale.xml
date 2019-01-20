@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <set>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleX"
+                android:valueTo="1.5"/>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleY"
+                android:valueTo="1.5"/>
+
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleX"
+                android:startOffset="200"
+                android:valueTo="0.9"/>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleY"
+                android:startOffset="200"
+                android:valueTo="0.9"/>
+
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleX"
+                android:startOffset="400"
+                android:valueTo="1"/>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleY"
+                android:startOffset="400"
+                android:valueTo="1"/>
+        </set>
+    </item>
+    <item android:state_checked="false">
+        <set>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleX"
+                android:valueTo="1.5"/>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleY"
+                android:valueTo="1.5"/>
+
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleX"
+                android:startOffset="200"
+                android:valueTo="0.9"/>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleY"
+                android:startOffset="200"
+                android:valueTo="0.9"/>
+
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleX"
+                android:startOffset="400"
+                android:valueTo="1"/>
+            <objectAnimator
+                android:duration="200"
+                android:propertyName="scaleY"
+                android:startOffset="400"
+                android:valueTo="1"/>
+        </set>
+    </item>
+
+</set>
