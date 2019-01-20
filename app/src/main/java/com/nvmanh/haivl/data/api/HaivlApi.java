@@ -19,7 +19,8 @@ public interface HaivlApi {
     Call<User> login(@Field("username") String username, @Field("password") String password);
 
     @GET("get_posts.php")
-    Call<List<Post>> getPosts(@Query("username") String myUsername);
+    Call<List<Post>> getPosts(@Query("username") String myUsername,
+                              @Query("page") int page);
 
     @GET("like.php")
     Call<Void> like(@Query("username") String Username,
