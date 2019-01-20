@@ -31,6 +31,7 @@
         android:inputType="text"
         android:maxLines="1"
         android:textCursorDrawable="@drawable/cursor_white"
+        android:text="admin"
         />
 
     <EditText
@@ -49,6 +50,7 @@
         android:maxLines="1"
         android:inputType="textPassword"
         android:textCursorDrawable="@drawable/cursor_white"
+        android:text="123456"
         />
 
     <Button
