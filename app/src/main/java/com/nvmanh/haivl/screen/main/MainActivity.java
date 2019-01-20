@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String EXTRA_USER = "user";
 
+    private User mUser;
     private HomeFragment mHomeFragment;
     private HotFragment mHotFragment;
     private LibraryFragment mLibraryFragment;
@@ -41,7 +42,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         mNavigationView = findViewById(R.id.bottom_navigaiont);
         mNavigationView.setOnNavigationItemSelectedListener(this);
+
+        mUser = getUser();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_USER, mUser);
         mHomeFragment = new HomeFragment();
+        mHomeFragment.setArguments(bundle);
         mHotFragment = new HotFragment();
         mLibraryFragment = new LibraryFragment();
         mFragmentManager = getSupportFragmentManager();
@@ -79,5 +86,11 @@ public class MainActivity extends AppCompatActivity
                 .show(fShow)
                 .commit();
         mFragmentCurrent = fShow;
+    }
+
+    private User getUser() {
+        Intent intent = getIntent();
+        User user = intent.getParcelableExtra(EXTRA_USER);
+        return user;
     }
 }

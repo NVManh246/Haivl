@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/image_user_avatar"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:src="@drawable/haivl"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="@dimen/dp_10"
+        />
+
+    <TextView
+        android:id="@+id/text_display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/image_user_avatar"
+        app:layout_constraintLeft_toRightOf="@+id/image_user_avatar"
+        app:layout_constraintBottom_toTopOf="@+id/text_post_time"
+        android:text="N V Manh"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_18"
+        android:layout_marginLeft="@dimen/dp_10"
+        />
+
+    <TextView
+        android:id="@+id/text_post_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:10:10"
+        app:layout_constraintTop_toBottomOf="@+id/text_display_name"
+        app:layout_constraintLeft_toRightOf="@+id/image_user_avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/image_user_avatar"
+        android:layout_marginLeft="@dimen/dp_10"
+        />
+
+    <TextView
+        android:id="@+id/text_post_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Thông dịch trực tuyến miễn Thông dịch trực tuyến miễn phí được phát triển bởi các định nghĩa từ điển, phát âm, từ đồng nghĩa, các ví dụ và hỗ trợ 19 ngôn ngữ được sử dụng nhiều nhất ..."
+        app:layout_constraintTop_toBottomOf="@+id/image_user_avatar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/color_mine_shaft"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="@dimen/sp_15"
+        />
+
+    <ImageView
+        android:id="@+id/image_post_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/text_post_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@drawable/tf1"
+        android:adjustViewBounds="true"
+        />
+
+    <ImageView
+        android:id="@+id/image_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_favorite_red_24dp"
+        app:layout_constraintTop_toBottomOf="@+id/image_post_image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="@dimen/dp_10"
+        />
+
+    <TextView
+        android:id="@+id/text_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        app:layout_constraintTop_toTopOf="@+id/image_like"
+        app:layout_constraintBottom_toBottomOf="@+id/image_like"
+        app:layout_constraintLeft_toRightOf="@id/image_like"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:textColor="@color/color_mine_shaft" />
+
+    <ImageView
+        android:id="@+id/image_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_chat_bubble_outline_black_24dp"
+        app:layout_constraintTop_toBottomOf="@+id/image_post_image"
+        app:layout_constraintLeft_toRightOf="@+id/text_likes"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        />
+
+    <TextView
+        android:id="@+id/text_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        app:layout_constraintTop_toTopOf="@+id/image_like"
+        app:layout_constraintBottom_toBottomOf="@+id/image_like"
+        app:layout_constraintLeft_toRightOf="@id/image_comment"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:textColor="@color/color_mine_shaft" />
+
+</android.support.constraint.ConstraintLayout>
